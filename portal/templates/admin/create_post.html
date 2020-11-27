@@ -1,0 +1,88 @@
+{% extends "admin/layout.html" %}
+{% block content %}
+<form method="POST" action="" enctype="multipart/form-data">
+        {{ form.hidden_tag() }}
+        <fieldset class="fieldset">
+            <legend class="title is-3">{{title}}</legend>
+            <div class="field">
+                <p class="control">
+                    {{ form.title.label(class="label") }}
+                    {% if form.title.errors %}
+                        {{ form.title(class="input is-danger") }}
+                        {% for error in form.title.errors %}
+                        <p class="help is-danger">{{ error }}</p>
+                        {% endfor %}
+                    {% else %}
+                        {{ form.title(class="input") }}
+                    {% endif %}
+                </p>
+            </div>
+            <div class="field">
+                <p class="control">
+                    <div class="select">
+                        {% if form.kategori.errors %}
+                                {{ form.kategori(class="custom-select") }}
+                                <div class="invalid-feedback">
+                                        {% for error in form.kategori.errors %}
+                                                <span>{{ error }}</span>
+                                        {% endfor %}
+                                </div>
+                        {% else %}
+                        {{ form.kategori }}
+                        {% endif %}
+                    </div>
+                </p>
+            </div>
+            <div class="field">
+                <p class="control">
+                {{ form.content.label(class="label") }}
+                {% if form.content.errors %}
+                    {{ form.content(class="form-control form-control-lg is-invalid") }}
+                    <div class="invalid-feedback">
+                        {% for error in form.content.errors %}
+                            <span>{{ error }}</span>
+                        {% endfor %}
+                    </div>
+                {% else %}
+                    {{ form.content(class="textarea") }}
+                {% endif %}
+                </p>
+            </div>
+            <div class="field">
+                    {{ form.thumbnail.label(class="file-label") }}
+                    {{ form.thumbnail(class="") }}
+                    {% if form.thumbnail.errors %}
+                        {% for error in form.thumbnail.errors %}
+                            <span class="text-danger">{{ error }}</span><br>
+                        {% endfor %}
+                    {% endif %}
+            </div>
+            <div class="field">
+                {{ form.multiple_company.label }}
+                {% if form.multiple_company.errors %}
+                    {{ form.multiple_company(class="form-control is-invalid") }}
+                    <div class="invalid-feedback">
+                    {% for error in form.multiple_company.errors %}
+                        <span class="text-danger">{{ error }}</span><br>
+                    {% endfor %}
+                    </div>
+                {% else %}
+                    {{ form.multiple_company(style="width: 100%;") }}
+                {% endif %}
+            </div>
+            <div class="field">
+                <div class="control">
+                    {{ form.is_headline(class="checkbox")}}
+                    {{ form.is_headline.label(class="checkbox")}}
+                </div>
+            </div>
+            <div class="field">
+                <p class="control has-text-right">
+                    {{ form.submit(class="button is-success") }}
+                </p>
+            </div>
+        </fieldset>
+    </form>
+	{{ ckeditor.load(custom_url=url_for('static', filename='ckeditor/ckeditor.js')) }}
+    {{ ckeditor.config(name='content') }}
+{% endblock content %}

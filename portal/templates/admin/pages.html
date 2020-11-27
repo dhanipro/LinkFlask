@@ -1,0 +1,53 @@
+{% extends "admin/layout.html" %}
+{% block content %}
+    <p class="title is-3">Pages</p>
+    {% for page in pages.items %}
+    <div class="box">
+        <a href="">{{ page.author_pages.username }}</a>
+        <time>{{ page.date_posted.strftime('%Y-%m-%d') }}</time>
+        <div class="mt-1">
+            <a href="{{ url_for('admin.update_page', id=page.id) }}" class="button is-warning is-small">Edit</a>
+            <a href="{{ url_for('admin.delete_page', page_id=page.id) }}" class="button is-danger is-small" onclick="return confirm('Anda yakin ingin menghapus ini?');">Hapus</a>
+        </div>  
+            <p class="title is-5 mt-2">{{ page.title }}</p>
+            <p class="subtitle is-6">{{ page.content|truncate(500)|striptags }}</p>
+    </div>
+    {% endfor %}
+        <nav class="pagination is-small" role="navigation" aria-label="pagination">
+            {% if pages.has_prev %}
+            <a href="{{ url_for('admin.panel', page=pages.prev_num) }}" class="pagination-previous">Previous</a>
+            {% endif %}
+            {% if pages.has_next %}
+            <a href="{{ url_for('admin.panel', page=pages.next_num) }}" class="pagination-next">Next page</a>
+            {% endif %}
+
+            <ul class="pagination-list">
+            {% for page_num in pages.iter_pages(left_edge=1, right_edge=1, left_current=1, right_current=2) %}
+                {% if page_num %}
+                    {% if pages.page == page_num %}
+                <li><a class="pagination-link is-current" disabled>{{ page_num }}</a></li>
+                    {% else %}
+                <li><a href="{{ url_for('admin.panel', page=page_num) }}" class="pagination-link">{{ page_num }}</a></li>
+                    {% endif %}
+                {% else %}
+                <li><span class="pagination-ellipsis">&hellip;</span></li>
+                {% endif %}
+            {% endfor %}
+            </ul>
+        </nav>
+
+        <div class="modal modal-fx-fadeInScale">
+            <div class="modal-background"></div>
+            <div class="modal-card">
+                <header class="modal-card-head">
+                <p class="modal-card-title">Yakin Ingin Menghapus?</p>
+                <button class="delete" aria-label="close"></button>
+                </header>
+                <section class="modal-card-body">
+                </section>
+                <footer class="modal-card-foot">
+                <button class="button is-danger is-pulled-right">Hapus</button>
+                </footer>
+            </div>
+        </div>
+{% endblock content %}

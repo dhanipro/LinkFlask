@@ -1,0 +1,40 @@
+{% extends "post/main.html" %}
+{% block content %}
+            <div class="columns">
+                <div class="column">
+                    <div class="columns">
+                        <div class="column">
+                            <p class="title is-4">Artikel berdasarkan {{ label }} <strong class="has-text-info">"{{ single_kategori.name }}"</strong></p>
+                        </div>
+                    </div>
+                    {% for post in posts.items %}
+                    <div class="columns">
+                        <div class="column is-two-fifths">
+                            <figure class="image is-16by9">
+                                <a href="{{ url_for('posts.post', berita=post.category.slug, post_id=post.slug) }}">
+                                    <img src="{{ url_for('static', filename='upload/img_thumbnail/' + post.image_thumb) }}" alt="{{ post.title }}">
+                                </a>
+                            </figure>
+                        </div>
+                        <div class="column">
+                            <a class="title is-4 is-marginless" href="{{ url_for('posts.post', berita=post.category.slug, post_id=post.slug) }}">{{ post.title }}</a>
+                            <p class="subtitle is-size-7 has-text-grey-light is-marginless">{{ post.date_posted.strftime('%d-%h-%Y') }}</p>
+                            <p class="subtitle is-6">{{ post.content|truncate(255)|striptags }}</p>
+                        </div>
+                    </div>
+                    {% endfor %}
+                    <section class="section">
+                        <div class="columns">
+                            <div class="column">
+                                {% if posts.has_prev %}
+                                <a href="{{ url_for('posts.kategori', slug_kategori=single_kategori.slug, page=posts.prev_num) }}" class="button is-danger is-rounded is-outlined">Prev</a>
+                                {% endif %}
+                                {% if posts.has_next %}
+                                <a href="{{ url_for('posts.kategori', slug_kategori=single_kategori.slug, page=posts.next_num) }}" class="button is-danger is-rounded is-outlined is-pulled-right">Next</a>
+                                {% endif %}
+                            </div>
+                        </div>
+                    </section>
+                </div>
+            </div>
+{% endblock content %}

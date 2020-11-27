@@ -1,0 +1,160 @@
+{% import "flask_select2/lib.html" as select2 %}
+<!DOCTYPE html>
+<html>
+  <head>
+    <meta charset="utf-8">
+    <meta name="viewport" content="width=device-width, initial-scale=1">
+    <title>Dashboard - {{ blog_name }}</title>
+    <link rel="stylesheet" href="{{ url_for('static', filename='css/mystyles.css') }}">
+    <link rel="stylesheet" href="{{ url_for('static', filename='css/style.css') }}">
+    <link rel="stylesheet" href="https://unpkg.com/bulma-modal-fx/dist/css/modal-fx.min.css" />
+    <script defer src="https://use.fontawesome.com/releases/v5.3.1/js/all.js"></script>
+    <script src="https://code.jquery.com/jquery-3.4.1.min.js"></script>
+    <script type="text/javascript" src="https://unpkg.com/bulma-modal-fx/dist/js/modal-fx.min.js"></script>
+  </head>
+  <body>
+        <nav class="navbar is-dark" role="navigation" aria-label="main navigation">
+            <div class="container">
+                <div class="navbar-brand">
+                  <a class="navbar-item" href="{{ url_for('admin.admin_index') }}">
+                    {{ blog_name }}
+                  </a>
+              
+                  <a role="button" class="navbar-burger burger" aria-label="menu" aria-expanded="false" data-target="navbarBasicExample">
+                    <span aria-hidden="true"></span>
+                    <span aria-hidden="true"></span>
+                    <span aria-hidden="true"></span>
+                  </a>
+                </div>
+              
+                <div id="navbarBasicExample" class="navbar-menu">
+                  <div class="navbar-start">
+                    <a href="{{ url_for('admin.new_post') }}" class="navbar-item">
+                      Tambah Post
+                    </a>
+              
+                    <a href="{{ url_for('admin.new_page') }}" class="navbar-item">
+                      Tambah Halaman
+                    </a>
+                    <div class="navbar-item has-dropdown is-hoverable">
+                      <a class="navbar-link">
+                        Lainnya
+                      </a>
+              
+                      <div class="navbar-dropdown">
+                        <a href="{{ url_for('admin.pages') }}" class="navbar-item">
+                          Halaman
+                        </a>
+                        <a href="{{ url_for('admin.kategori') }}" class="navbar-item">
+                          Kategori
+                        </a>
+                        <a href="{{ url_for('admin.tag') }}" class="navbar-item">
+                          Tag
+                        </a>
+                        <a href="{{ url_for('admin.users') }}" class="navbar-item">
+                          User
+                        </a>
+                        <a href="{{ url_for('admin.comments') }}" class="navbar-item">
+                          Komentar
+                        </a>
+                        <a href="{{ url_for('admin.list_subscribers') }}" class="navbar-item">
+                          Subscribers
+                        </a>
+                      </div>
+                    </div>
+                  </div>
+
+                  {% if current_user.is_authenticated %}
+                  <div class="navbar-end">
+                    <div class="navbar-item">
+                      <div class="buttons">
+                        <a href="{{ url_for('auth.logout') }}" class="button is-light">
+                          Logout
+                        </a>
+                      </div>
+                    </div>
+                  </div>
+                  {% endif %}
+
+                </div>
+            </div>
+        </nav>
+        <div class="container">
+            <div class="columns is-marginless">
+                <div class="column is-two-thirds">
+                    <!-- flash -->
+                    {% with messages = get_flashed_messages(with_categories=true) %}
+                    {% if messages %}
+                    {% for category, message in messages %}
+                    <div class="notification {{ category }}">
+                    <button class="delete"></button>
+                    {{ message }}
+                    </div>
+                    {% endfor %}
+                        {% endif %}
+                    {% endwith %}
+                    {% block content %}{% endblock %}
+                </div>
+                <div class="column">
+                  <!-- populer -->
+                  <div class="columns">
+                      <div class="column">
+                          <nav class="panel is-dark">
+                              <p class="panel-heading is-radiusless">
+                                  Popular Posts
+                              </p>
+                              {% for p in populer %}
+                                  <div class="columns px-1 py-1">
+                                      <div class="column is-one-third">
+                                          <figure class="image is-4by3">
+                                              <img src="{{ url_for('static', filename='upload/img_thumbnail/' + p.image_thumb) }}" alt="{{ p.title }}">
+                                          </figure>
+                                      </div>
+                                      <div class="column">
+                                          <p><a class="title is-6" href="{{ url_for('posts.post', berita=p.category.slug, post_id=p.slug) }}">{{ p.title }}</a></p>
+                                          <p class="subtitle is-size-7 has-text-grey-light">{{ p.date_posted.strftime('%d-%h-%Y') }}</p>
+                                      </div>
+                                  </div>
+                              {% endfor %}
+                          </nav>
+                      </div>
+                  </div>
+                  <!-- end populer -->
+
+                  <!-- count user post -->
+                  <div class="columns">
+                    <div class="column">
+                        <nav class="panel is-dark">
+                            <p class="panel-heading is-radiusless">
+                                User Posts
+                            </p>
+                            {% for user in user_post %}
+                                  <p class="panel-block">
+                                    <span class="panel-icon">
+                                      <i class="fas fa-user" aria-hidden="true"></i>
+                                    </span>
+                                    {{ user.username }} ({{ user.posts|length }})
+                                  </p>
+                            {% endfor %}
+                        </nav>
+                    </div>
+                </div>
+                  <!-- end count user post -->
+                </div>
+            </div>
+        </div>
+        <script>
+                document.addEventListener('DOMContentLoaded', () => {
+                (document.querySelectorAll('.notification .delete') || []).forEach(($delete) => {
+                    $notification = $delete.parentNode;
+            
+                    $delete.addEventListener('click', () => {
+                    $notification.parentNode.removeChild($notification);
+                    });
+                });
+            });
+        </script>
+        {{ select2.form_js() }}
+        
+  </body>
+</html>

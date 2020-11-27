@@ -1,0 +1,31 @@
+{% extends "post/main.html" %}
+{% block content %}
+        <div class="columns">
+            <div class="column">
+                <nav class="breadcrumb" aria-label="breadcrumbs">
+                    <ul>
+                        <li><a href="#">Halaman</a></li>
+                        <li class="is-active"><a href="#" aria-current="page">{{ halaman.title }}</a></li>
+                    </ul>
+                </nav>
+            </div>
+        </div>
+        <div class="columns">
+            <div class="column">
+                <p class="title is-3">{{ halaman.title }}</p>
+            </div>
+        </div>
+        <div class="columns">
+            <div class="column">
+                <p class="subtitle is-size-7 has-text-grey-light">{{ halaman.date_posted.strftime('%d-%h-%Y') }}</p>
+            </div>
+        </div>
+        <div class="columns">
+            <div class="column">
+                <div class="content">
+                    {{ halaman.content | safe }}
+                </div>
+            </div>
+        </div>
+
+{% endblock content %}

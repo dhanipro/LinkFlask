@@ -1,0 +1,38 @@
+{% extends "auth/layout.html" %}
+{% block content %}
+        <form method="POST" action="">
+            {{ form.hidden_tag() }}
+            <fieldset class="fieldset">
+                <legend class="title is-3">{{title}}</legend>
+                <div class="field">
+                    <p class="control has-icons-left has-icons-right">
+                        {% if form.email.errors %}
+                            {{ form.email(class="input is-danger") }}
+                            <span class="icon is-small is-left">
+                                <i class="fas fa-envelope"></i>
+                            </span>
+                            <span class="icon is-small is-right">
+                                <i class="fas fa-check"></i>
+                            </span>
+                            {% for error in form.email.errors %}
+                            <p class="help is-danger">{{ error }}</p>
+                            {% endfor %}
+                        {% else %}
+                            {{ form.email(class="input") }}
+                            <span class="icon is-small is-left">
+                                <i class="fas fa-envelope"></i>
+                            </span>
+                            <span class="icon is-small is-right">
+                                <i class="fas fa-check"></i>
+                            </span>
+                        {% endif %}
+                    </p>
+                </div>
+                <div class="field">
+                    <p class="control has-text-right">
+                        {{ form.submit(class="button is-success") }}
+                    </p>
+                </div>
+            </fieldset>
+        </form>
+{% endblock content %}

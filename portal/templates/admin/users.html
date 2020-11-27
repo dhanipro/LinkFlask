@@ -1,0 +1,36 @@
+{% extends "admin/layout.html" %}
+{% block content %}
+    <br>
+    <table class="table">
+        <thead>
+            <tr>
+                <th>#</th>
+                <th>Nama</th>
+                <th>Email</th>
+                <th>Mendaftar</th>
+                <th>Status</th>
+                <th>Role</th>
+                <th></th>
+            </tr>
+        </thead>
+        <tbody>
+                {% for user in users %}
+            <tr> 
+                <td>{{ loop.index }}</td>       
+                <td>{{ user.username }}</td>
+                <td>{{ user.email }}</td>
+                <td>{{ user.register_on.strftime('%d-%B-%Y') }}</td>
+                {% if user.active %}
+                    <td>Aktif</td>
+                {% else %}
+                    <td>NonAktif</td>
+                {% endif %}
+                <td>{{ user.role.name }}</td>
+                <td>
+                    <a href="{{ url_for('admin.account', id=user.id) }}" class="button is-small is-warning">Edit</a>
+                </td>
+            </tr>
+            {% endfor %}
+        </tbody>
+    </table>
+{% endblock content %}

@@ -1,0 +1,109 @@
+{% extends "admin/layout.html" %}
+{% block content %}
+    <div class="columns is-centered mt-2">
+        <div class="column is-two-fifths">
+            <figure class="image is-128x128">
+                <img class="is-rounded" src="{{ url_for('static', filename='upload/profile_pics/'+user.image_file) }}">
+            </figure>
+        </div>
+    </div>
+      <form method="POST" action="" enctype="multipart/form-data">
+        {{ form.hidden_tag() }}
+        <fieldset class="fieldset">
+            <legend class="title is-3">{{title}}</legend>
+            <div class="field">
+                <p class="control has-icons-left has-icons-right">
+                    {% if form.username.errors %}
+                        {{ form.username(class="input is-danger") }}
+                        <span class="icon is-small is-left">
+                            <i class="fas fa-user"></i>
+                        </span>
+                        <span class="icon is-small is-right">
+                            <i class="fas fa-check"></i>
+                        </span>
+                        {% for error in form.username.errors %}
+                        <p class="help is-danger">{{ error }}</p>
+                        {% endfor %}
+                    {% else %}
+                        {{ form.username(class="input") }}
+                        <span class="icon is-small is-left">
+                            <i class="fas fa-user"></i>
+                        </span>
+                        <span class="icon is-small is-right">
+                            <i class="fas fa-check"></i>
+                        </span>
+                    {% endif %}
+                </p>
+            </div>
+            <div class="field">
+                <p class="control has-icons-left has-icons-right">
+                    {% if form.email.errors %}
+                        {{ form.email(class="input is-danger") }}
+                        <span class="icon is-small is-left">
+                            <i class="fas fa-envelope"></i>
+                        </span>
+                        <span class="icon is-small is-right">
+                            <i class="fas fa-check"></i>
+                        </span>
+                        {% for error in form.email.errors %}
+                        <p class="help is-danger">{{ error }}</p>
+                        {% endfor %}
+                    {% else %}
+                        {{ form.email(class="input") }}
+                        <span class="icon is-small is-left">
+                            <i class="fas fa-envelope"></i>
+                        </span>
+                        <span class="icon is-small is-right">
+                            <i class="fas fa-check"></i>
+                        </span>
+                    {% endif %}
+                </p>
+            </div>
+            <div class="field">
+                <div class="control">
+                  <div class="select">
+                    {{ form.role }}
+                  </div>
+                </div>
+			</div>
+            <div class="field">
+                <p class="control has-icons-left has-icons-right">
+                    {% if form.biografi.errors %}
+                        {{ form.biografi(class="textarea is-danger") }}
+                            {% for error in form.biografi.errors %}
+                            <p class="help is-danger">{{ error }}</p>
+                            {% endfor %}
+                    {% else %}
+                        {{ form.biografi(class="textarea") }}
+                    {% endif %}
+                </p>
+            </div>
+            <div class="field">
+                <div class="control">
+                    {{ form.active(class="checkbox")}}
+                    {{ form.active.label(class="checkbox")}}
+                </div>
+            </div>
+            <div class="field">
+                <div class="file is-info has-name">
+                  <label class="file-label">
+                    {{ form.picture(class="file-input") }}
+                    <span class="file-cta">
+                      <span class="file-icon">
+                        <i class="fas fa-upload"></i>
+                      </span>
+                      <span class="file-label">
+                        {{ form.picture.label }}
+                      </span>
+                    </span>
+                  </label>
+                </div>
+            </div>
+            <div class="field">
+                <p class="control has-text-right">
+                    {{ form.submit(class="button is-success") }}
+                </p>
+            </div>
+        </fieldset>
+    </form>
+{% endblock content %}

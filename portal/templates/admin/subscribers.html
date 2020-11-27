@@ -1,0 +1,23 @@
+{% extends "admin/layout.html" %}
+{% block content %}
+    <br>
+    <p class="title is-3">Total {{ subscribers|length }}</p>
+    <table class="table">
+        <thead>
+            <tr>
+                <th>#</th>
+                <th>Email</th>
+                <th>Mendaftar</th>
+            </tr>
+        </thead>
+        <tbody>
+                {% for subscriber in subscribers %}
+            <tr> 
+                <td>{{ loop.index }}</td>       
+                <td>{{ subscriber.email }}</td>
+                <td>{{ subscriber.date_posted|indonesia_time }}</td>
+            </tr>
+            {% endfor %}
+        </tbody>
+    </table>
+{% endblock content %}

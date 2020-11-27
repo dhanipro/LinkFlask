@@ -1,0 +1,213 @@
+<!DOCTYPE html>
+<html>
+  <head>
+    <meta http-equiv="Content-Type" content="text/html; charset=utf-8">
+    
+    <meta name="viewport" content="width=device-width, initial-scale=1">
+    <!-- Favicons -->
+    <!-- <link href="{{ url_for('static', filename='src/icon.png') }}" rel="icon">
+    <link href="{{ url_for('static', filename='src/icon.png') }}" rel="apple-touch-icon"> -->
+    <link rel="stylesheet" href="{{ url_for('static', filename='css/mystyles.css') }}">
+    <script src="https://code.jquery.com/jquery-3.5.1.slim.min.js"></script>
+    <!--adsense-->
+    <!-- end adsense -->
+
+    <!-- Global site tag (gtag.js) - Google Analytics -->
+    <!-- End Google Analystyc -->
+    {% if meta %}
+    <title>{{ post.title }} - {{ blog_name }}</title>
+    <script defer src="https://use.fontawesome.com/releases/v5.3.1/js/all.js"></script>
+    <meta name="description" content="{{ post.content|striptags|truncate(150) }}">
+    <meta name="news_keywords" content="{{ post.title }}">
+    <!-- facebook -->
+    <meta property="og:title" content="{{ post.title }}" />
+    <meta property="og:url" content="{{ request.url }}" />
+    <meta property="og:image" content="{{ url_for('static', filename='upload/img_thumbnail/' + post.image_thumb) }}" />
+    <meta property="og:image:width" content="600" />
+    <meta property="og:image:height" content="300" />
+    <!-- end facebook -->
+    <!-- twitter -->
+    <meta name="twitter:card" content="summary" />
+    <meta name="twitter:title" content="{{meta}}" />
+    <meta name="twitter:description" content="{{ post.content|striptags|truncate(150) }}" />
+    <meta name="twitter:image" content="{{ url_for('static', filename='upload/img_thumbnail/' + post.image_thumb, _external=True) }}" />
+    <!-- end twitter -->
+    {% else %}
+        <title>{{ blog_name }}</title>
+        <meta name="description" content="Find the latest Programming news from {{ blog_name }}. See related science and technology articles, photos, slideshows and videos.">
+    {% endif %}
+
+    {% if title %}
+        <title>{{ title }} - {{ blog_name }}</title>
+    {% else %}
+        <title>{{ blog_name }}</title>
+    {% endif %}
+  </head>
+  <body>
+  <!-- <section class="section"> -->
+    <progress class="progress is-small is-dark is-radiusless is-marginless" value="100" max="100">15%</progress>
+    <div class="container has-background-white box">
+        <div class="columns">
+            <div class="column is-one-third is-hidden-mobile">
+                <a href="/">
+                    <h1 class="title is-1 text-logo">{{ blog_name }}</h1>
+                </a>
+            </div>
+            <div class="column has-text-right">
+                <img src="{{ url_for('static', filename='upload/728x90ads.png') }}">
+            </div>
+        </div>
+
+        <!-- Navbar -->
+        <div class="columns">
+            <div class="column">
+                <nav class="navbar is-dark" role="navigation" aria-label="main navigation">
+                        <div class="navbar-brand is-hidden-desktop">
+                            <a class="navbar-item" href="/">
+                                <h1 class="title is-3 has-text-white">{{ blog_name }}</h1>
+                            </a>
+                            <a role="button" class="navbar-burger" aria-label="menu" aria-expanded="false">
+                                <span aria-hidden="true"></span>
+                                <span aria-hidden="true"></span>
+                                <span aria-hidden="true"></span>
+                            </a>
+                        </div>
+                    
+                <div id="navbarBasicExample" class="navbar-menu">
+                    <div class="navbar-start">
+                        <a href="/" class="navbar-item">Home</a>
+                        {% for k in kategori %}
+                        <a href="{{ url_for('posts.kategori', slug_kategori=k.slug) }}" class="navbar-item">{{ k.name }}</a>
+                        {% endfor %}
+                    </div>
+
+                    <div class="navbar-end">
+                        <div class="navbar-item">
+                            <form method="GET" action="/search">
+                                <div class="field has-addons">
+                                        <div class="control">
+                                            <input name="q" class="input" type="text" placeholder="Cari...">
+                                        </div>
+                                        <div class="control">
+                                        <button class="button is-success">
+                                            Search
+                                        </button>
+                                        </div>
+                                </div>
+                            </form>
+                        </div>
+                    </div>
+
+                    </div>
+                </nav>
+            </div>
+        </div>
+        <!-- end-navbar -->
+        
+        <div class="columns">
+            <div class="column is-three-fifths">
+                <!-- flash -->
+                {% with messages = get_flashed_messages(with_categories=true) %}
+                {% if messages %}
+                {% for category, message in messages %}
+                <div class="notification {{ category }}">
+                {{ message }}
+                </div>
+                {% endfor %}
+                    {% endif %}
+                {% endwith %}
+                <!-- end flash -->
+                {% block content %}{% endblock %}
+            </div>
+            <!-- sidebar -->
+            <div class="column">
+                <!-- sidebar ads -->
+                <!-- <div class="columns">
+                    <div class="column">
+                        ads Sidebar
+                    </div>
+                </div> -->
+                <!-- end sidebar ads -->
+                <div class="columns">
+                    <div class="column">
+                        <nav class="panel is-dark">
+                            <p class="panel-heading is-radiusless mb-2">
+                                Popular Posts
+                            </p>
+                            {% for p in populer %}
+                                <div class="columns pl-1">
+                                    <div class="column is-one-third">
+                                        <figure class="image is-4by3">
+                                            <img src="{{ url_for('static', filename='upload/img_thumbnail/' + p.image_thumb) }}" alt="{{ p.title }}" style="object-fit: cover;">
+                                        </figure>
+                                    </div>
+                                    <div class="column">
+                                        <p><a class="title is-6" href="{{ url_for('posts.post', berita=p.category.slug, post_id=p.slug) }}">{{ p.title }}</a></p>
+                                        <p class="subtitle is-size-7 has-text-grey-light">{{ p.date_posted.strftime('%d-%h-%Y') }}</p>
+                                    </div>
+                                </div>
+                            {% endfor %}
+                        </nav>
+                    </div>
+                </div>
+                <section class="section-custom"></section>
+                <div class="columns">
+                    <div class="column">
+                        <nav class="panel is-dark">
+                            <p class="panel-heading is-radiusless">
+                                Tags
+                            </p>
+                            <div class="columns px-1 py-1">
+                                <div class="column">
+                                    <div class="tags">
+                                        {% for tag in topik %}
+                                        <span class="tag is-black">
+                                            <a class="has-text-white" href="{{ url_for('posts.topik', slug_tag=tag.slug) }}">{{ tag.name }}</a>
+                                        </span>
+                                        {% endfor %}
+                                    </div>
+                                </div>
+                            </div>
+                        </nav>
+                    </div>
+                </div>
+                <!-- block subscribe -->
+                    {% include "post/subscribe.html" %}
+                <!-- end block subscribe -->
+            </div>
+        </div>
+    </div>
+    <!-- footer -->
+    <footer class="footer has-background-dark is-paddingless">
+        <div class="has-text-centered py-5">
+            <nav class="breadcrumb has-bullet-separator is-centered" aria-label="breadcrumbs">
+                <ul>
+                    {% for page in pages %}
+                    <li><a href="{{ url_for('posts.halaman', slug=page.slug) }}" class="has-text-white">{{ page.title }}</a></li>
+                    {% endfor %}
+                </ul>
+            </nav>
+            <p class="has-text-white">{{ blog_name }}|Copyright &copy; {{ now }}</p>
+        </div>
+    </footer>
+    <!-- end-footer -->
+  <!-- </section> -->
+  <script>
+      const navbarBurgers = document.getElementsByClassName('navbar-burger')[0];
+      const navbarMenu = document.getElementsByClassName('navbar-menu')[0];
+      const burgerClick = navbarBurgers.addEventListener('click', tampilMenu);
+
+      function tampilMenu(){
+        navbarBurgers.classList.toggle('is-active');
+        navbarMenu.classList.toggle('is-active');
+      }
+
+      function outsideClick(e){
+            if(e.target){ 
+                element.classList.remove("is-active");            
+            }
+        
+        }
+  </script>
+  </body>
+</html>

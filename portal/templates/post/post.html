@@ -1,0 +1,57 @@
+{% extends "main.html" %}
+{% block content %}
+    <div class="row">
+
+        <div class="col-md-8">
+            <div class="blog-post">
+                <h2 class="blog-post-title">{{ post.title }}</h2>
+                <p class="blog-post-meta">{{ post.date_posted.strftime('%d-%m-%Y') }} Oleh <a href="#">{{ post.author.username }}</a></p>
+
+                {{ post.content | safe }}
+            </div><!-- /.blog-post -->
+            <div class="mb-4">
+                Topik: 
+            {% for t in post.tags %}
+                <a href="{{ url_for('posts.topik', name=t.name) }}" class="badge badge-success">{{ t.name }}</a>
+            {% endfor %}
+            </div>
+        </div>
+        <div class="col-md-4">
+            <!-- <div class="card p-4">
+                iklan google
+            </div> -->
+
+            <div class="p-3 mb-3 bg-light rounded">
+                <h4 class="font-italic">Topik Terpopuler</h4>
+                <p class="mb-0">
+                    {% for t in topik %}
+                    <a href="{{ url_for('posts.topik', name=t.name) }}" class="badge badge-success">{{ t.name }}</a>
+                    {% endfor %}
+                </p>
+            </div>
+
+            <div class="p-4 bg-light rounded">
+                <h4 class="mb-3 font-italic">Artikel Populer</h4>
+                {% for p in populer %}
+                <div class="media mb-3">
+                    <img class="mr-3" width="64" height="auto" src="{{ url_for('static', filename='upload/img_thumbnail/' + p.image_thumb) }}" alt="{{ p.title }}">
+                    <div class="media-body">
+                    <h5 class="mt-1"><a href="{{ url_for('posts.post',berita=p.category.nama_kategori, post_id=p.slug) }}">{{ p.title|truncate(30, false) }}</a></h5>
+                    {{ p.content|truncate(100, false)|striptags }}
+                    </div>
+                </div>
+                {% endfor %}
+            </div>
+            
+            <div class="p-4">
+                <h4 class="font-italic">Sosial</h4>
+                <ol class="list-unstyled">
+                    <li><a href="#">Facebook</a></li>
+                </ol>
+            </div>
+
+        </div>
+
+    </div>
+
+{% endblock content %}

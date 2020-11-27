@@ -1,0 +1,61 @@
+{% extends "admin/layout.html" %}
+{% block content %}
+    {% if comments.items %}
+    <p class="title is-3">Komentar</p>
+    {% for comment in comments.items %}
+    <div class="box">
+        <a href="{{ comment.website }}" target="_blank">{{ comment.name }}</a>
+        <time class="has-text-grey-light">{{ comment.date_comment|indonesia_time(with_time=true) }}</time>
+        <p>{{ comment.email }}</p>
+        {% if comment.reply_id %}
+        <span class="tag is-pulled-right">Membalas {{ comment.reply.name }}</span>
+        {% endif %}
+        <div class="mt-1">
+            {% if comment.publish %}
+            <a href="{{ url_for('admin.publish_unpublish_comment', id=comment.id) }}" class="button is-warning is-small">Unpublish</a>
+            {% else %}
+            <a href="{{ url_for('admin.publish_unpublish_comment', id=comment.id) }}" class="button is-success is-small">Publish</a>
+            {% endif %}
+            <a href="{{ url_for('admin.delete_comment', id=comment.id) }}" class="button is-danger is-small" onclick="return confirm('Anda yakin ingin menghapus ini?');">Hapus</a>
+        </div>  
+            <p id="{{ comment.id }}" class="title is-5 mt-2"><a href="{{ url_for('posts.post', berita=comment.post_comment.category.slug, post_id=comment.post_comment.slug) }}">{{ comment.post_comment.title }}</a></p>
+            <p class="subtitle is-6">{{ comment.comment|truncate(500) }}</p>
+        <hr>
+    </div>
+    {% endfor %}
+    {% else %}
+    <div class="notification is-success is-light">
+        <button class="delete"></button>
+        Anda belum memposting artikel.
+    </div>
+    {% endif %}
+        <nav class="pagination is-small" role="navigation" aria-label="pagination">
+            {% if comments.has_prev %}
+            <a href="{{ url_for('admin.panel', page=comments.prev_num) }}" class="pagination-previous">Previous</a>
+            {% endif %}
+            {% if comments.has_next %}
+            <a href="{{ url_for('admin.panel', page=comments.next_num) }}" class="pagination-next">Next page</a>
+            {% endif %}
+
+            <ul class="pagination-list">
+            {% for page_num in comments.iter_pages(left_edge=1, right_edge=1, left_current=1, right_current=2) %}
+                {% if page_num %}
+                    {% if comments.page == page_num %}
+                <li><a class="pagination-link is-current" disabled>{{ page_num }}</a></li>
+                    {% else %}
+                <li><a href="{{ url_for('admin.panel', page=page_num) }}" class="pagination-link">{{ page_num }}</a></li>
+                    {% endif %}
+                {% else %}
+                <li><span class="pagination-ellipsis">&hellip;</span></li>
+                {% endif %}
+            {% endfor %}
+            </ul>
+        </nav>
+        <script>
+            // disable 
+            $(".delete").click(function() {
+              $(".modal").removeClass("is-active");
+            });
+            // end disable
+        </script>
+{% endblock content %}

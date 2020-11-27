@@ -1,0 +1,62 @@
+{% extends "admin/layout.html" %}
+{% block content %}
+    {% if posts.items %}
+    <p class="title is-3">Postingan</p>
+    {% for post in posts.items %}
+    <div class="box">
+        <a href="">{{ post.author.username }}</a>
+        <time>{{ post.date_posted.strftime('%d-%B-%Y') }}</time>
+        <span class="tag is-pulled-right">{{ post.category.name }}</span>
+        <div class="mt-1">
+            <a href="{{ url_for('admin.update_post', post_id=post.id) }}" class="button is-warning is-small">Edit</a>
+            <a href="{{ url_for('admin.delete_post', post_id=post.id) }}" class="button is-danger is-small" onclick="return confirm('Anda yakin ingin menghapus ini?');">Hapus</a>
+            <a href="{{ url_for('admin.send_to_subscribers', post_id=post.id) }}" class="button is-info is-small" onclick="return confirm('Anda yakin ingin mengirim ini ke pelanggan?');">Kirim Email</a>
+        </div>  
+            <p id="{{ post.id }}" class="title is-5 mt-2"><a href="{{ url_for('posts.post', berita=post.category.slug, post_id=post.slug) }}">{{ post.title }}</a></p>
+            <p class="subtitle is-6">{{ post.content|truncate(500)|striptags }}</p>
+        <hr>
+        <div class="tags">
+            {% for t in post.tags %}
+            <span class="tag">{{ t.name }}</span>
+            {% endfor %}
+            <p class="has-text-grey-light is-size-7">dilihat {{ post.dibaca }}</p>
+            <p class="has-text-grey-light is-size-7 pl-3">diperbarui {{ post.on_update.strftime('%d-%B-%Y') }}</p>
+        </div>
+    </div>
+    {% endfor %}
+    {% else %}
+    <div class="notification is-success is-light">
+        <button class="delete"></button>
+        Anda belum memposting artikel.
+    </div>
+    {% endif %}
+        <nav class="pagination is-small" role="navigation" aria-label="pagination">
+            {% if posts.has_prev %}
+            <a href="{{ url_for('admin.admin_index', page=posts.prev_num) }}" class="pagination-previous">Previous</a>
+            {% endif %}
+            {% if posts.has_next %}
+            <a href="{{ url_for('admin.admin_index', page=posts.next_num) }}" class="pagination-next">Next page</a>
+            {% endif %}
+
+            <ul class="pagination-list">
+            {% for page_num in posts.iter_pages(left_edge=1, right_edge=1, left_current=1, right_current=2) %}
+                {% if page_num %}
+                    {% if posts.page == page_num %}
+                <li><a class="pagination-link is-current" disabled>{{ page_num }}</a></li>
+                    {% else %}
+                <li><a href="{{ url_for('admin.admin_index', page=page_num) }}" class="pagination-link">{{ page_num }}</a></li>
+                    {% endif %}
+                {% else %}
+                <li><span class="pagination-ellipsis">&hellip;</span></li>
+                {% endif %}
+            {% endfor %}
+            </ul>
+        </nav>
+        <script>
+            // disable 
+            $(".delete").click(function() {
+              $(".modal").removeClass("is-active");
+            });
+            // end disable
+        </script>
+{% endblock content %}

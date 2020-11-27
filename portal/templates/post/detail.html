@@ -1,0 +1,321 @@
+{% extends "post/main.html" %}
+{% block content %}
+        <div class="columns">
+            <div class="column">
+                <nav class="breadcrumb" aria-label="breadcrumbs">
+                    <ul>
+                        <li><a href="#">{{ post.category.nama_kategori }}</a></li>
+                    </ul>
+                </nav>
+            </div>
+        </div>
+        <div class="columns">
+            <div class="column">
+                <h3 class="title is-3">{{ post.title }}</h3>
+            </div>
+        </div>
+        <div class="columns">
+            <div class="column">
+                <p class="subtitle is-size-7 has-text-grey-light">{{ post.date_posted.strftime('%d-%h-%Y') }}</p>
+            </div>
+        </div>
+        <div class="columns">
+            <div class="column">
+                <div class="content">
+                    {{ post.content | safe }}
+                </div>
+            </div>
+        </div>
+        <div class="columns">
+            <div class="column">
+                <div class="tags">
+                    <span class="tag is-black">Topik :</span>
+                    {% for tag in post.tags  %}
+                        <span class="tag">{{ tag.name }}</span>
+                    {% endfor %}
+                </div>
+            </div>
+        </div>
+        <div class="columns">
+            <div class="column">
+                <a class="button is-small is-link" href="https://www.facebook.com/sharer/sharer.php?u={{ request.url }}">
+                    <span class="icon">
+                        <i class="fab fa-facebook-f"></i>
+                    </span>
+                    <span>Facebook</span>
+                </a>
+                <a class="button is-small is-info" href="https://twitter.com/share?url={{ request.url }}&text={{ post.title }}">
+                    <span class="icon">
+                        <i class="fab fa-twitter"></i>
+                    </span>
+                    <span>Twitter</span>
+                </a>
+                <a class="button is-small is-success" href="https://api.whatsapp.com/send?text={{ post.title }} | {{ request.url }}">
+                    <span class="icon">
+                        <i class="fab fa-whatsapp"></i>
+                    </span>
+                    <span>Whatsapp</span>
+                </a>
+            </div>
+        </div>
+        <div class="columns">
+            <div class="column">
+                <h5 class="title is-5 is-marginless">Similar Posts</h5>
+                <progress class="progress is-small is-primary is-radiusless" value="43" max="100"></progress>
+            </div>
+        </div>
+        <div class="columns">
+            {% for s in similar %}
+                <div class="column is-one-third">
+                    <div class="card">
+                        <div class="card-image">
+                            <figure class="image is-4by3">
+                                <a href="{{ url_for('posts.post', berita=s.category.slug, post_id=s.slug) }}">
+                                    <img src="{{ url_for('static', filename='upload/img_thumbnail/' + s.image_thumb) }}" alt="{{ s.title }}">
+                                </a>
+                            </figure>
+                        </div>
+                        <div class="card-content">                
+                            <a href="{{ url_for('posts.post', berita=s.category.slug, post_id=s.slug) }}" class="title is-6">{{ s.title }}</a>
+                            <time class="subtitle is-size-7 has-text-grey-light" datetime="{{ s.date_posted }}">{{ s.date_posted.strftime('%d-%m-%Y') }}</time>
+                        </div>
+                    </div>
+                </div>
+            {% endfor %}
+        </div>
+        <hr>
+        <!-- comments -->
+        <p class="title is-4">Komentar ({{ post.comments.count() }})</p>
+        {% for comment in post.comments %}
+        {% if not comment.reply_id %}
+        <article class="media">
+            <figure class="media-left">
+              <p class="image is-64x64">
+                <img class="is-rounded" src="{{ comment.avatar(128) }}">
+              </p>
+            </figure>
+            <div class="media-content">
+              <div class="content">
+                <p>
+                  <strong>{{ comment.name }}</strong>
+                  <br>
+                  {{ comment.comment }}
+                  <br>
+                  <small><a class="replyComment" data-comment-id="{{ comment.id }}" data-comment-user="{{ comment.name }}">Reply</a> · <span class="has-text-grey-light">{{ comment.date_comment|indonesia_time(with_time=true) }}</span></small>
+                </p>
+              </div>
+              <!-- reply -->
+                {% for reply in comment.children %}
+                <article class="media">
+                    <figure class="media-left">
+                    <p class="image is-48x48">
+                        <img class="is-rounded" src="{{ reply.avatar(64) }}">
+                    </p>
+                    </figure>
+                    <div class="media-content">
+                        <div class="content">
+                            <p>
+                            <strong>{{ reply.name }}</strong>
+                            <br>
+                            {{ reply.comment }}
+                            <br>
+                            <small class="has-text-grey-light">{{ reply.date_comment|indonesia_time(with_time=true) }}</small>
+                            </p>
+                        </div>
+                    </div>
+                </article>
+                {% endfor %}
+              <!-- end reply -->
+            </div>
+          </article>
+        <hr>
+        {% endif %}
+        {% endfor %}
+        <!-- end comments -->
+        <!-- form comments -->
+        <p class="title is-4">Tinggalkan Komentar</p>
+        <form action="" method="POST">
+            {{ form_comment.hidden_tag() }}
+        <div class="field">
+            <div class="control">
+                {% if form_comment.nama.errors %}
+                    {{ form_comment.nama(class="input is-danger") }}
+                    {% for error in form_comment.nama.errors %}
+                    <p class="help is-danger">{{ error }}</p>
+                    {% endfor %}
+                {% else %}
+                    {{ form_comment.nama(class="input") }}
+                {% endif %}
+            </div>
+          </div>
+          
+          <div class="field">
+            <div class="control">
+                {% if form_comment.email.errors %}
+                    {{ form_comment.email(class="input is-danger") }}
+                    {% for error in form_comment.email.errors %}
+                    <p class="help is-danger">{{ error }}</p>
+                    {% endfor %}
+                {% else %}
+                    {{ form_comment.email(class="input") }}
+                {% endif %}
+            </div>
+          </div>
+
+          <div class="field">
+            <div class="control">
+                {% if form_comment.website.errors %}
+                    {{ form_comment.website(class="input is-danger") }}
+                    {% for error in form_comment.website.errors %}
+                    <p class="help is-danger">{{ error }}</p>
+                    {% endfor %}
+                {% else %}
+                    {{ form_comment.website(class="input") }}
+                {% endif %}
+            </div>
+          </div>
+          
+          <div class="field">
+            <div class="control">
+                {% if form_comment.comment.errors %}
+                    {{ form_comment.comment(class="textarea is-danger") }}
+                    {% for error in form_comment.comment.errors %}
+                    <p class="help is-danger">{{ error }}</p>
+                    {% endfor %}
+                {% else %}
+                    {{ form_comment.comment(class="textarea") }}
+                {% endif %}
+            </div>
+          </div>
+          
+          <div class="field is-grouped">
+            <div class="control">
+                {{ form_comment.submit(class="button is-link") }}
+            </div>
+          </div>
+        </form>
+        <!-- end form comments -->
+
+        <!-- modal reply -->
+        <div class="modal">
+            <div class="modal-background"></div>
+            <div class="modal-card">
+              <header class="modal-card-head">
+                <p class="modal-card-title"></p>
+                <button class="delete" aria-label="close"></button>
+              </header>
+              <section class="modal-card-body">
+                <!-- Content ... -->
+                <form action="" method="POST">
+                    {{ form_reply.hidden_tag() }}
+                    <input type="hidden" id="commentId" name="commentId" value="">
+                    <div class="field">
+                        <div class="control">
+                            {% if form_reply.nama.errors %}
+                                {{ form_reply.nama(class="input is-danger") }}
+                                {% for error in form_reply.nama.errors %}
+                                <p class="help is-danger">{{ error }}</p>
+                                {% endfor %}
+                            {% else %}
+                                {{ form_reply.nama(class="input") }}
+                            {% endif %}
+                        </div>
+                    </div>
+                  
+                    <div class="field">
+                        <div class="control">
+                            {% if form_reply.email.errors %}
+                                {{ form_reply.email(class="input is-danger") }}
+                                {% for error in form_reply.email.errors %}
+                                <p class="help is-danger">{{ error }}</p>
+                                {% endfor %}
+                            {% else %}
+                                {{ form_reply.email(class="input") }}
+                            {% endif %}
+                        </div>
+                    </div>
+        
+                    <div class="field">
+                        <div class="control">
+                            {% if form_reply.website.errors %}
+                                {{ form_reply.website(class="input is-danger") }}
+                                {% for error in form_reply.website.errors %}
+                                <p class="help is-danger">{{ error }}</p>
+                                {% endfor %}
+                            {% else %}
+                                {{ form_reply.website(class="input") }}
+                            {% endif %}
+                        </div>
+                    </div>
+                    
+                    <div class="field">
+                        <div class="control">
+                            {% if form_reply.comment.errors %}
+                                {{ form_reply.comment(class="textarea is-danger") }}
+                                {% for error in form_reply.comment.errors %}
+                                <p class="help is-danger">{{ error }}</p>
+                                {% endfor %}
+                            {% else %}
+                                {{ form_reply.comment(class="textarea") }}
+                            {% endif %}
+                        </div>
+                    </div>
+              </section>
+              <footer class="modal-card-foot">
+                {{ form_reply.submit(class="button is-link") }}
+              </footer>
+            </form>
+            </div>
+          </div>
+          <script>
+              $(document).ready(function(){
+                //   show modal
+                $(".replyComment").click(function(){
+                    $(".modal").addClass("is-active")
+                    let commentId = $(this).data('comment-id')
+                    let userComment = $(this).data('comment-user')
+                    $(".modal-card-title").text('Balas komentar '+userComment)
+                    $("#commentId").val(commentId)
+                })
+                // end show modal
+
+                // close modal
+                $(".delete").click(function(){
+                    $(".modal").removeClass("is-active");
+                });
+                // end close modal
+              })
+          </script>
+        <!-- end modal reply -->
+
+
+    
+    <!-- Markup JSON-LD dibuat oleh Pemandu Markup Data Terstruktur Google. -->
+    <script type="application/ld+json">
+        {
+        "@context" : "http://schema.org",
+        "@type" : "BlogPosting",
+        "headline" : "{{ post.title }}",
+        "author" : {
+            "@type" : "Person",
+            "name" : "{{ post.author.username }}"
+          },
+        "publisher": {
+			"@type": "Organization",
+			"name": "ForceDraft",
+            "url": "http://forcedraft.com",
+            "logo": {
+				"@type": "ImageObject",
+				"url": "https://forcedraft.com/static/src/logo.png",
+				"width":"200",
+				"height":"86"
+			}
+		},
+		"mainEntityOfPage": "True",
+        "datePublished" : "{{ post.date_posted.strftime('%Y-%m-%d') }}",
+        "image" : "https://forcedraft.com{{ url_for('static', filename='upload/img_thumbnail/' + post.image_thumb) }}",
+        "articleBody" : "{{ post.content|striptags|truncate(255) }}"
+        }
+    </script>
+
+{% endblock content %}

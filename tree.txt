@@ -1,0 +1,552 @@
+D:.
+│   requirements.txt
+│   run.py
+│
+└───portal
+    │   models.py
+    │   utils.py
+    │   __init__.py
+    │
+    ├───admin
+    │   │   forms.py
+    │   │   routes.py
+    │   │   utils.py
+    │   │   __init__.py
+    │   │
+    │   └───__pycache__
+    │           forms.cpython-37.pyc
+    │           forms.cpython-38.pyc
+    │           routes.cpython-37.pyc
+    │           routes.cpython-38.pyc
+    │           utils.cpython-38.pyc
+    │           __init__.cpython-37.pyc
+    │           __init__.cpython-38.pyc
+    │
+    ├───api
+    │   │   routes.py
+    │   │   schema.py
+    │   │   __init__.py
+    │   │
+    │   └───__pycache__
+    │           routes.cpython-38.pyc
+    │           schema.cpython-38.pyc
+    │           __init__.cpython-38.pyc
+    │
+    ├───auth
+    │   │   forms.py
+    │   │   routes.py
+    │   │   utils.py
+    │   │
+    │   └───__pycache__
+    │           forms.cpython-38.pyc
+    │           routes.cpython-38.pyc
+    │           utils.cpython-38.pyc
+    │
+    ├───posts
+    │   │   forms.py
+    │   │   routes.py
+    │   │   utils.py
+    │   │   __init__.py
+    │   │
+    │   └───__pycache__
+    │           forms.cpython-37.pyc
+    │           forms.cpython-38.pyc
+    │           routes.cpython-37.pyc
+    │           routes.cpython-38.pyc
+    │           utils.cpython-38.pyc
+    │           __init__.cpython-37.pyc
+    │           __init__.cpython-38.pyc
+    │
+    ├───static
+    │   ├───ckeditor
+    │   │   │   build-config.js
+    │   │   │   CHANGES.md
+    │   │   │   ckeditor.js
+    │   │   │   config.js
+    │   │   │   contents.css
+    │   │   │   LICENSE.md
+    │   │   │   README.md
+    │   │   │   styles.js
+    │   │   │
+    │   │   ├───adapters
+    │   │   │       jquery.js
+    │   │   │
+    │   │   ├───lang
+    │   │   │       en.js
+    │   │   │       id.js
+    │   │   │
+    │   │   ├───plugins
+    │   │   │   │   icons.png
+    │   │   │   │   icons_hidpi.png
+    │   │   │   │
+    │   │   │   ├───a11yhelp
+    │   │   │   │   └───dialogs
+    │   │   │   │       │   a11yhelp.js
+    │   │   │   │       │
+    │   │   │   │       └───lang
+    │   │   │   │               af.js
+    │   │   │   │               ar.js
+    │   │   │   │               az.js
+    │   │   │   │               bg.js
+    │   │   │   │               ca.js
+    │   │   │   │               cs.js
+    │   │   │   │               cy.js
+    │   │   │   │               da.js
+    │   │   │   │               de-ch.js
+    │   │   │   │               de.js
+    │   │   │   │               el.js
+    │   │   │   │               en-au.js
+    │   │   │   │               en-gb.js
+    │   │   │   │               en.js
+    │   │   │   │               eo.js
+    │   │   │   │               es-mx.js
+    │   │   │   │               es.js
+    │   │   │   │               et.js
+    │   │   │   │               eu.js
+    │   │   │   │               fa.js
+    │   │   │   │               fi.js
+    │   │   │   │               fo.js
+    │   │   │   │               fr-ca.js
+    │   │   │   │               fr.js
+    │   │   │   │               gl.js
+    │   │   │   │               gu.js
+    │   │   │   │               he.js
+    │   │   │   │               hi.js
+    │   │   │   │               hr.js
+    │   │   │   │               hu.js
+    │   │   │   │               id.js
+    │   │   │   │               it.js
+    │   │   │   │               ja.js
+    │   │   │   │               km.js
+    │   │   │   │               ko.js
+    │   │   │   │               ku.js
+    │   │   │   │               lt.js
+    │   │   │   │               lv.js
+    │   │   │   │               mk.js
+    │   │   │   │               mn.js
+    │   │   │   │               nb.js
+    │   │   │   │               nl.js
+    │   │   │   │               no.js
+    │   │   │   │               oc.js
+    │   │   │   │               pl.js
+    │   │   │   │               pt-br.js
+    │   │   │   │               pt.js
+    │   │   │   │               ro.js
+    │   │   │   │               ru.js
+    │   │   │   │               si.js
+    │   │   │   │               sk.js
+    │   │   │   │               sl.js
+    │   │   │   │               sq.js
+    │   │   │   │               sr-latn.js
+    │   │   │   │               sr.js
+    │   │   │   │               sv.js
+    │   │   │   │               th.js
+    │   │   │   │               tr.js
+    │   │   │   │               tt.js
+    │   │   │   │               ug.js
+    │   │   │   │               uk.js
+    │   │   │   │               vi.js
+    │   │   │   │               zh-cn.js
+    │   │   │   │               zh.js
+    │   │   │   │               _translationstatus.txt
+    │   │   │   │
+    │   │   │   ├───about
+    │   │   │   │   └───dialogs
+    │   │   │   │       │   about.js
+    │   │   │   │       │   logo_ckeditor.png
+    │   │   │   │       │
+    │   │   │   │       └───hidpi
+    │   │   │   │               logo_ckeditor.png
+    │   │   │   │
+    │   │   │   ├───clipboard
+    │   │   │   │   └───dialogs
+    │   │   │   │           paste.js
+    │   │   │   │
+    │   │   │   ├───dialog
+    │   │   │   │   │   dialogDefinition.js
+    │   │   │   │   │
+    │   │   │   │   └───styles
+    │   │   │   │           dialog.css
+    │   │   │   │
+    │   │   │   ├───image
+    │   │   │   │   ├───dialogs
+    │   │   │   │   │       image.js
+    │   │   │   │   │
+    │   │   │   │   └───images
+    │   │   │   │           noimage.png
+    │   │   │   │
+    │   │   │   ├───link
+    │   │   │   │   ├───dialogs
+    │   │   │   │   │       anchor.js
+    │   │   │   │   │       link.js
+    │   │   │   │   │
+    │   │   │   │   └───images
+    │   │   │   │       │   anchor.png
+    │   │   │   │       │
+    │   │   │   │       └───hidpi
+    │   │   │   │               anchor.png
+    │   │   │   │
+    │   │   │   ├───magicline
+    │   │   │   │   └───images
+    │   │   │   │       │   icon-rtl.png
+    │   │   │   │       │   icon.png
+    │   │   │   │       │
+    │   │   │   │       └───hidpi
+    │   │   │   │               icon-rtl.png
+    │   │   │   │               icon.png
+    │   │   │   │
+    │   │   │   ├───pastefromgdocs
+    │   │   │   │   └───filter
+    │   │   │   │           default.js
+    │   │   │   │
+    │   │   │   ├───pastefromword
+    │   │   │   │   └───filter
+    │   │   │   │           default.js
+    │   │   │   │
+    │   │   │   ├───pastetools
+    │   │   │   │   └───filter
+    │   │   │   │           common.js
+    │   │   │   │           image.js
+    │   │   │   │
+    │   │   │   ├───scayt
+    │   │   │   │   │   CHANGELOG.md
+    │   │   │   │   │   LICENSE.md
+    │   │   │   │   │   README.md
+    │   │   │   │   │
+    │   │   │   │   ├───dialogs
+    │   │   │   │   │       dialog.css
+    │   │   │   │   │       options.js
+    │   │   │   │   │       toolbar.css
+    │   │   │   │   │
+    │   │   │   │   └───skins
+    │   │   │   │       └───moono-lisa
+    │   │   │   │               scayt.css
+    │   │   │   │
+    │   │   │   ├───specialchar
+    │   │   │   │   └───dialogs
+    │   │   │   │       │   specialchar.js
+    │   │   │   │       │
+    │   │   │   │       └───lang
+    │   │   │   │               af.js
+    │   │   │   │               ar.js
+    │   │   │   │               az.js
+    │   │   │   │               bg.js
+    │   │   │   │               ca.js
+    │   │   │   │               cs.js
+    │   │   │   │               cy.js
+    │   │   │   │               da.js
+    │   │   │   │               de-ch.js
+    │   │   │   │               de.js
+    │   │   │   │               el.js
+    │   │   │   │               en-au.js
+    │   │   │   │               en-ca.js
+    │   │   │   │               en-gb.js
+    │   │   │   │               en.js
+    │   │   │   │               eo.js
+    │   │   │   │               es-mx.js
+    │   │   │   │               es.js
+    │   │   │   │               et.js
+    │   │   │   │               eu.js
+    │   │   │   │               fa.js
+    │   │   │   │               fi.js
+    │   │   │   │               fr-ca.js
+    │   │   │   │               fr.js
+    │   │   │   │               gl.js
+    │   │   │   │               he.js
+    │   │   │   │               hr.js
+    │   │   │   │               hu.js
+    │   │   │   │               id.js
+    │   │   │   │               it.js
+    │   │   │   │               ja.js
+    │   │   │   │               km.js
+    │   │   │   │               ko.js
+    │   │   │   │               ku.js
+    │   │   │   │               lt.js
+    │   │   │   │               lv.js
+    │   │   │   │               nb.js
+    │   │   │   │               nl.js
+    │   │   │   │               no.js
+    │   │   │   │               oc.js
+    │   │   │   │               pl.js
+    │   │   │   │               pt-br.js
+    │   │   │   │               pt.js
+    │   │   │   │               ro.js
+    │   │   │   │               ru.js
+    │   │   │   │               si.js
+    │   │   │   │               sk.js
+    │   │   │   │               sl.js
+    │   │   │   │               sq.js
+    │   │   │   │               sr-latn.js
+    │   │   │   │               sr.js
+    │   │   │   │               sv.js
+    │   │   │   │               th.js
+    │   │   │   │               tr.js
+    │   │   │   │               tt.js
+    │   │   │   │               ug.js
+    │   │   │   │               uk.js
+    │   │   │   │               vi.js
+    │   │   │   │               zh-cn.js
+    │   │   │   │               zh.js
+    │   │   │   │               _translationstatus.txt
+    │   │   │   │
+    │   │   │   ├───table
+    │   │   │   │   └───dialogs
+    │   │   │   │           table.js
+    │   │   │   │
+    │   │   │   ├───tableselection
+    │   │   │   │   └───styles
+    │   │   │   │           tableselection.css
+    │   │   │   │
+    │   │   │   ├───tabletools
+    │   │   │   │   └───dialogs
+    │   │   │   │           tableCell.js
+    │   │   │   │
+    │   │   │   ├───widget
+    │   │   │   │   └───images
+    │   │   │   │           handle.png
+    │   │   │   │
+    │   │   │   ├───wordcount
+    │   │   │   │   └───css
+    │   │   │   │           wordcount.css
+    │   │   │   │
+    │   │   │   ├───wsc
+    │   │   │   │   │   LICENSE.md
+    │   │   │   │   │   README.md
+    │   │   │   │   │
+    │   │   │   │   ├───dialogs
+    │   │   │   │   │       ciframe.html
+    │   │   │   │   │       tmpFrameset.html
+    │   │   │   │   │       wsc.css
+    │   │   │   │   │       wsc.js
+    │   │   │   │   │       wsc_ie.js
+    │   │   │   │   │
+    │   │   │   │   └───skins
+    │   │   │   │       └───moono-lisa
+    │   │   │   │               wsc.css
+    │   │   │   │
+    │   │   │   └───youtube
+    │   │   │       └───images
+    │   │   │               icon-hdpi.png
+    │   │   │               icon.png
+    │   │   │
+    │   │   ├───samples
+    │   │   │   │   index.html
+    │   │   │   │
+    │   │   │   ├───css
+    │   │   │   │       samples.css
+    │   │   │   │
+    │   │   │   ├───img
+    │   │   │   │       github-top.png
+    │   │   │   │       header-bg.png
+    │   │   │   │       header-separator.png
+    │   │   │   │       logo.png
+    │   │   │   │       logo.svg
+    │   │   │   │       navigation-tip.png
+    │   │   │   │
+    │   │   │   ├───js
+    │   │   │   │       sample.js
+    │   │   │   │       sf.js
+    │   │   │   │
+    │   │   │   ├───old
+    │   │   │   │   │   ajax.html
+    │   │   │   │   │   api.html
+    │   │   │   │   │   appendto.html
+    │   │   │   │   │   datafiltering.html
+    │   │   │   │   │   divreplace.html
+    │   │   │   │   │   index.html
+    │   │   │   │   │   inlineall.html
+    │   │   │   │   │   inlinebycode.html
+    │   │   │   │   │   inlinetextarea.html
+    │   │   │   │   │   jquery.html
+    │   │   │   │   │   readonly.html
+    │   │   │   │   │   replacebyclass.html
+    │   │   │   │   │   replacebycode.html
+    │   │   │   │   │   sample.css
+    │   │   │   │   │   sample.js
+    │   │   │   │   │   sample_posteddata.php
+    │   │   │   │   │   tabindex.html
+    │   │   │   │   │   uicolor.html
+    │   │   │   │   │   uilanguages.html
+    │   │   │   │   │   xhtmlstyle.html
+    │   │   │   │   │
+    │   │   │   │   ├───assets
+    │   │   │   │   │   │   posteddata.php
+    │   │   │   │   │   │   sample.jpg
+    │   │   │   │   │   │
+    │   │   │   │   │   ├───inlineall
+    │   │   │   │   │   │       logo.png
+    │   │   │   │   │   │
+    │   │   │   │   │   ├───outputxhtml
+    │   │   │   │   │   │       outputxhtml.css
+    │   │   │   │   │   │
+    │   │   │   │   │   └───uilanguages
+    │   │   │   │   │           languages.js
+    │   │   │   │   │
+    │   │   │   │   ├───dialog
+    │   │   │   │   │   │   dialog.html
+    │   │   │   │   │   │
+    │   │   │   │   │   └───assets
+    │   │   │   │   │           my_dialog.js
+    │   │   │   │   │
+    │   │   │   │   ├───enterkey
+    │   │   │   │   │       enterkey.html
+    │   │   │   │   │
+    │   │   │   │   ├───htmlwriter
+    │   │   │   │   │   │   outputforflash.html
+    │   │   │   │   │   │   outputhtml.html
+    │   │   │   │   │   │
+    │   │   │   │   │   └───assets
+    │   │   │   │   │       └───outputforflash
+    │   │   │   │   │               outputforflash.fla
+    │   │   │   │   │               outputforflash.swf
+    │   │   │   │   │               swfobject.js
+    │   │   │   │   │
+    │   │   │   │   ├───magicline
+    │   │   │   │   │       magicline.html
+    │   │   │   │   │
+    │   │   │   │   ├───toolbar
+    │   │   │   │   │       toolbar.html
+    │   │   │   │   │
+    │   │   │   │   ├───wordcount
+    │   │   │   │   │       maxParagraphs.html
+    │   │   │   │   │       wordcount.html
+    │   │   │   │   │       wordcountWithMaxCount.html
+    │   │   │   │   │
+    │   │   │   │   └───wysiwygarea
+    │   │   │   │           fullpage.html
+    │   │   │   │
+    │   │   │   └───toolbarconfigurator
+    │   │   │       │   index.html
+    │   │   │       │
+    │   │   │       ├───css
+    │   │   │       │       fontello.css
+    │   │   │       │
+    │   │   │       ├───font
+    │   │   │       │       config.json
+    │   │   │       │       fontello.eot
+    │   │   │       │       fontello.svg
+    │   │   │       │       fontello.ttf
+    │   │   │       │       fontello.woff
+    │   │   │       │       LICENSE.txt
+    │   │   │       │
+    │   │   │       ├───js
+    │   │   │       │       abstracttoolbarmodifier.js
+    │   │   │       │       fulltoolbareditor.js
+    │   │   │       │       toolbarmodifier.js
+    │   │   │       │       toolbartextmodifier.js
+    │   │   │       │
+    │   │   │       └───lib
+    │   │   │           └───codemirror
+    │   │   │                   codemirror.css
+    │   │   │                   codemirror.js
+    │   │   │                   javascript.js
+    │   │   │                   LICENSE
+    │   │   │                   neo.css
+    │   │   │                   show-hint.css
+    │   │   │                   show-hint.js
+    │   │   │
+    │   │   ├───skins
+    │   │   │   └───moono-lisa
+    │   │   │       │   dialog.css
+    │   │   │       │   dialog_ie.css
+    │   │   │       │   dialog_ie8.css
+    │   │   │       │   dialog_iequirks.css
+    │   │   │       │   editor.css
+    │   │   │       │   editor_gecko.css
+    │   │   │       │   editor_ie.css
+    │   │   │       │   editor_ie8.css
+    │   │   │       │   editor_iequirks.css
+    │   │   │       │   icons.png
+    │   │   │       │   icons_hidpi.png
+    │   │   │       │   readme.md
+    │   │   │       │
+    │   │   │       └───images
+    │   │   │           │   arrow.png
+    │   │   │           │   close.png
+    │   │   │           │   lock-open.png
+    │   │   │           │   lock.png
+    │   │   │           │   refresh.png
+    │   │   │           │   spinner.gif
+    │   │   │           │
+    │   │   │           └───hidpi
+    │   │   │                   close.png
+    │   │   │                   lock-open.png
+    │   │   │                   lock.png
+    │   │   │                   refresh.png
+    │   │   │
+    │   │   └───vendor
+    │   │           promise.js
+    │   │
+    │   ├───css
+    │   │       bulma.css
+    │   │       bulma.css.map
+    │   │       bulma.min.css
+    │   │       mystyles.css
+    │   │       select2-spinner.gif
+    │   │       select2.png
+    │   │       style.css
+    │   │
+    │   ├───src
+    │   │       easing.min.js
+    │   │       jquery-1.12.4.min.js
+    │   │
+    │   └───upload
+    │       │   728x90ads.png
+    │       │
+    │       ├───img
+    │       ├───img_thumbnail
+    │       │       default.jpg
+    │       │
+    │       └───profile_pics
+    │               default.jpg
+    │
+    ├───templates
+    │   ├───admin
+    │   │       account.html
+    │   │       add_tag.html
+    │   │       comments.html
+    │   │       create_page.html
+    │   │       create_post.html
+    │   │       home.html
+    │   │       kategori.html
+    │   │       layout.html
+    │   │       mail.html
+    │   │       pages.html
+    │   │       subscribers.html
+    │   │       tag.html
+    │   │       tambah_kategori.html
+    │   │       users.html
+    │   │       user_posts.html
+    │   │
+    │   ├───auth
+    │   │       layout.html
+    │   │       login.html
+    │   │       register.html
+    │   │       reset_request.html
+    │   │       reset_token.html
+    │   │
+    │   ├───error
+    │   │       403.html
+    │   │       404.html
+    │   │
+    │   └───post
+    │           category.html
+    │           create_post.html
+    │           detail.html
+    │           halaman.html
+    │           home.html
+    │           hubungi.html
+    │           hubungi_ori.html
+    │           kategori.html
+    │           login.html
+    │           main.html
+    │           post.html
+    │           sitemap.xml
+    │           subscribe.html
+    │           topik.html
+    │
+    └───__pycache__
+            config.cpython-38.pyc
+            models.cpython-38.pyc
+            utils.cpython-38.pyc
+            __init__.cpython-38.pyc
